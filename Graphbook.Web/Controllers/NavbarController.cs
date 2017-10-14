@@ -1,4 +1,4 @@
-﻿using Graphbook.Web.ViewModels;
+﻿using Graphbook.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +9,16 @@ namespace Graphbook.Web.Controllers
 {
     public class NavbarController : Controller
     {
+        private readonly IUser currentUser;
+
+        public NavbarController(IUser currentUser)
+        {
+            this.currentUser = currentUser;
+        }
+
         public ActionResult Index()
         {
-            //TODO: Navbar vm
-
-            return View(new NavbarVM(userFullName: System.Security.Claims.ClaimsPrincipal.Current.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name")?.Value));
+            return View(currentUser);
         }
     }
 }

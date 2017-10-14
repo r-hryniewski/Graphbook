@@ -1,4 +1,4 @@
-﻿@model  Graphbook.Web.ViewModels.NavbarVM
+﻿@model  Graphbook.Contracts.IUserIdentity
 @{
     Layout = null;
 }
@@ -14,12 +14,13 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("Me", "Me", "Users")</li>
+                <li>@Html.ActionLink("Not me", "List", "Users")</li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if (Model.IsAuthenticated)
                 {
-                    <li><a><span class="glyphicon glyphicon-user"></span> @Model.UserFullName</a></li>
+                    <li><a href="@Url.Action("Me", "Users")"><span class="glyphicon glyphicon-user"></span> @string.Format("{0} {1}", Model.Name, Model.LastName)</a></li>
                 }
                 else
                 {
