@@ -116,6 +116,7 @@
   <ItemGroup>
     <Compile Include="Graphs\GremlinClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Graphbook.Contracts\Graphbook.Contracts.csproj">

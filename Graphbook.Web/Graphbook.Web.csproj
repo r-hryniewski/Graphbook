@@ -46,6 +46,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
+      <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -168,6 +171,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\InitController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NavbarController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -217,6 +221,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\DemoInit\" />
     <Folder Include="Views\Users\" />
   </ItemGroup>
   <ItemGroup>
@@ -236,6 +241,10 @@
     <ProjectReference Include="..\Graphbook.Contracts\Graphbook.Contracts.csproj">
       <Project>{98be21d4-e9cf-4efe-bb0b-3d346e4403ba}</Project>
       <Name>Graphbook.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Graphbook.DAL\Graphbook.DAL.csproj">
+      <Project>{90B8748E-516F-4032-9844-907CFA06DA77}</Project>
+      <Name>Graphbook.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Graphbook\Graphbook.csproj">
       <Project>{10d45257-b1f9-4137-903c-cabf955373a4}</Project>

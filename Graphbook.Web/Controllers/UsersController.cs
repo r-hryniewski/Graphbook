@@ -10,6 +10,7 @@ namespace Graphbook.Web.Controllers
     {
         public ActionResult Me()
         {
+            
             return Content("'Me' NYI");
         }
 

@@ -11,6 +11,7 @@ namespace Graphbook.Web.App_Start
     using Ninject;
     using Ninject.Web.Common;
     using Graphbook.Contracts;
+    using Graphbook.DAL.Graphs;
 
     public static class NinjectWebCommon 
     {
@@ -46,7 +47,10 @@ namespace Graphbook.Web.App_Start
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
 
-                kernel.Bind<IUser>().ToMethod(ctx => new Identity.User(System.Security.Claims.ClaimsPrincipal.Current));
+                kernel.Bind<IUser>().ToMethod(ctx => new Identity.User(System.Security.Claims.ClaimsPrincipal.Current)).InRequestScope();
+
+                kernel.Bind<DAL.Graphs.GremlinClient>().ToSelf().InSingletonScope();
+                kernel.Bind<DAL.UserRepository>().ToSelf().InRequestScope();
 
                 RegisterServices(kernel);
                 return kernel;

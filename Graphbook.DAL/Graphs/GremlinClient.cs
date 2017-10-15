@@ -25,7 +25,7 @@ namespace Graphbook.DAL.Graphs
 
         public GremlinClient()
         {
-            Init().GetAwaiter().GetResult();
+            Init();
         }
 
         public static async Task Init()
@@ -53,7 +53,6 @@ namespace Graphbook.DAL.Graphs
             return graph;
         }
 
-        //TODO: Linq, paging etc
         public async Task<IEnumerable<TResult>> Execute<TResult>(string gremlinQuery, Func<Vertex, TResult> selector, CancellationToken ct = default(CancellationToken))
         {
             var query = client.CreateGremlinQuery<Vertex>(await GetGraph(), gremlinQuery);
@@ -63,6 +62,20 @@ namespace Graphbook.DAL.Graphs
                 foreach (var vertex in await query.ExecuteNextAsync<Vertex>())
                 {
                     results.Add(selector(vertex));
+                }
+            }
+            return results;
+        }
+
+        public async Task<dynamic> ExecuteDynamic(string gremlinQuery, CancellationToken ct = default(CancellationToken))
+        {
+            var query = client.CreateGremlinQuery<Vertex>(await GetGraph(), gremlinQuery);
+            var results = new List<dynamic>();
+            while (query.HasMoreResults)
+            {
+                foreach (var result in await query.ExecuteNextAsync<dynamic>())
+                {
+                    results.Add(result);
                 }
             }
             return results;
