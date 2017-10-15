@@ -50,7 +50,7 @@ namespace Graphbook.Web.App_Start
                 kernel.Bind<IUser>().ToMethod(ctx => new Identity.User(System.Security.Claims.ClaimsPrincipal.Current)).InRequestScope();
 
                 kernel.Bind<DAL.Graphs.GremlinClient>().ToSelf().InSingletonScope();
-                kernel.Bind<DAL.UserRepository>().ToSelf().InRequestScope();
+                kernel.Bind<DAL.UserRepository>().ToSelf().InSingletonScope();
 
                 RegisterServices(kernel);
                 return kernel;

@@ -1,20 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Graphbook.Contracts;
+using Graphbook.DAL;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace Graphbook.Web.Controllers
 {
     public class UsersController : Controller
     {
-        public ActionResult Me()
+        private readonly IUser currentuser;
+        private readonly UserRepository repo;
+
+        public UsersController(IUser currentuser, UserRepository repo)
         {
-            
-            return Content("'Me' NYI");
+            this.currentuser = currentuser;
+            this.repo = repo;
         }
 
-        public ActionResult List()
+        public async Task<ActionResult> Me()
+        {
+            var myCard = await repo.GetCardAsync(currentuser.Id);            
+            return View(myCard);
+        }
+
+        public async Task<ActionResult> List()
         {
             return Content("'List' NYI");
         }

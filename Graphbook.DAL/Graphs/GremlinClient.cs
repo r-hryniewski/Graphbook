@@ -53,32 +53,38 @@ namespace Graphbook.DAL.Graphs
             return graph;
         }
 
-        public async Task<IEnumerable<TResult>> Execute<TResult>(string gremlinQuery, Func<Vertex, TResult> selector, CancellationToken ct = default(CancellationToken))
+        public async Task<IEnumerable<TResult>> Execute<TResult>(string gremlinQuery, Func<Vertex, TResult> vertexSelector, CancellationToken ct = default(CancellationToken))
         {
-            var query = client.CreateGremlinQuery<Vertex>(await GetGraph(), gremlinQuery);
-            var results = new List<TResult>();
-            while (query.HasMoreResults)
+            try
             {
-                foreach (var vertex in await query.ExecuteNextAsync<Vertex>())
+                var query = client.CreateGremlinQuery<Vertex>(await GetGraph(), gremlinQuery);
+                var results = new List<TResult>();
+                while (query.HasMoreResults)
                 {
-                    results.Add(selector(vertex));
+                    foreach (var vertex in await query.ExecuteNextAsync<Vertex>())
+                    {
+                        results.Add(vertexSelector(vertex));
+                    }
                 }
+                return results;
             }
-            return results;
+            catch (Exception ex)
+            {
+                //TODO: Log
+                throw;
+            }
         }
 
         public async Task<dynamic> ExecuteDynamic(string gremlinQuery, CancellationToken ct = default(CancellationToken))
         {
-            var query = client.CreateGremlinQuery<Vertex>(await GetGraph(), gremlinQuery);
-            var results = new List<dynamic>();
-            while (query.HasMoreResults)
-            {
-                foreach (var result in await query.ExecuteNextAsync<dynamic>())
-                {
-                    results.Add(result);
-                }
-            }
-            return results;
+            var query = client.CreateGremlinQuery<Vertex>(await GetGraph(), gremlinQuery, new FeedOptions() { MaxItemCount = null });
+            return await query.ExecuteNextAsync<dynamic>();
+        }
+
+        public async Task<FeedResponse<object>> ExecuteFeedResponse(string gremlinQuery, CancellationToken ct = default(CancellationToken))
+        {
+            var query = client.CreateGremlinQuery<Vertex>(await GetGraph(), gremlinQuery, new FeedOptions() { MaxItemCount = null });
+            return await query.ExecuteNextAsync<object>();
         }
 
         public async Task Execute(string gremlinQuery, CancellationToken ct = default(CancellationToken))

@@ -23,9 +23,16 @@ namespace Graphbook.DAL
         {
             var result = (await gremlinClient.Execute(
                 gremlinQuery: $"g.V('{userId}')",
-                selector: v => v.Id)).Select(id => id.ToString());
+                vertexSelector: v => v.Id)).Select(id => id.ToString());
 
             return result != null && result.Any();
+        }
+
+        public async Task<long> CountAllUsersAsync()
+        {
+            var result = await gremlinClient.ExecuteFeedResponse($"g.V().hasLabel('{UserLabel}').count()");
+
+            return (long)result.FirstOrDefault();
         }
 
         public Task<bool> UserExistsAsync(IUser user) => UserExistsAsync(user.Id);
@@ -33,6 +40,13 @@ namespace Graphbook.DAL
         public Task PersistUserAsync(IUserCard userCard)
         {
             return gremlinClient.Execute($"g.addV('{UserLabel}').property('id', '{userCard.Id}').property('name', '{userCard.Name}').property('lastName', '{userCard.LastName}').property('profilePictureUrl', '{userCard.ProfilePictureUrl}')");
+        }
+
+        public async Task<IUserCard> GetCardAsync(string userId)
+        {
+            var results = await gremlinClient.Execute(gremlinQuery: $"g.V('{userId}')",
+                vertexSelector: v => new Models.UserCard(v));
+            return results.FirstOrDefault();
         }
     }
 }
