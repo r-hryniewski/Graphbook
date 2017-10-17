@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IUser.cs" />
-    <Compile Include="IUserCard.cs" />
+    <Compile Include="IUserProfile.cs" />
     <Compile Include="IUserIdentity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

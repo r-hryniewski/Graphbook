@@ -10,11 +10,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            @Html.ActionLink("GremlinBook", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("GremlinBook", "Index", "Home", null, new { @class = "navbar-brand" })
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Me", "Me", "Users")</li>
+                @if (Model.IsAuthenticated)
+                {
+                    <li>@Html.ActionLink("Me", "Me", "Users")</li>
+                }
                 <li>@Html.ActionLink("Not me", "List", "Users")</li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

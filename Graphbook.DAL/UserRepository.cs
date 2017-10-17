@@ -28,6 +28,13 @@ namespace Graphbook.DAL
             return result != null && result.Any();
         }
 
+        public async Task<IEnumerable<IUserProfile>> GetAllUsersCardsAsync()
+        {
+            return await gremlinClient.Execute(
+                gremlinQuery: $"g.V().hasLabel('{UserLabel}').order().by('lastName', incr)",
+                vertexSelector: v => new Models.UserCard(v));
+        }
+
         public async Task<long> CountAllUsersAsync()
         {
             var result = await gremlinClient.ExecuteFeedResponse($"g.V().hasLabel('{UserLabel}').count()");
@@ -37,12 +44,12 @@ namespace Graphbook.DAL
 
         public Task<bool> UserExistsAsync(IUser user) => UserExistsAsync(user.Id);
 
-        public Task PersistUserAsync(IUserCard userCard)
+        public Task PersistUserAsync(IUserProfile userCard)
         {
             return gremlinClient.Execute($"g.addV('{UserLabel}').property('id', '{userCard.Id}').property('name', '{userCard.Name}').property('lastName', '{userCard.LastName}').property('profilePictureUrl', '{userCard.ProfilePictureUrl}')");
         }
 
-        public async Task<IUserCard> GetCardAsync(string userId)
+        public async Task<IUserProfile> GetCardAsync(string userId)
         {
             var results = await gremlinClient.Execute(gremlinQuery: $"g.V('{userId}')",
                 vertexSelector: v => new Models.UserCard(v));

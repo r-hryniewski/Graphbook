@@ -8,7 +8,7 @@ using Microsoft.Azure.Graphs.Elements;
 
 namespace Graphbook.DAL.Models
 {
-    public class UserCard : IUserCard
+    public class UserCard : IUserProfile
     {
         public string Id { get; private set; }
         public string Name { get; private set; }

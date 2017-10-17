@@ -16,6 +16,7 @@ namespace Graphbook.Web.Controllers
             this.repo = repo;
         }
 
+        [Authorize]
         public async Task<ActionResult> Me()
         {
             var myCard = await repo.GetCardAsync(currentuser.Id);            
@@ -24,7 +25,9 @@ namespace Graphbook.Web.Controllers
 
         public async Task<ActionResult> List()
         {
-            return Content("'List' NYI");
+            var usersCards = await repo.GetAllUsersCardsAsync();
+
+            return View(usersCards);
         }
     }
 }

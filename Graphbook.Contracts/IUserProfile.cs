@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Graphbook.Contracts
 {
-    public interface IUserCard : IUser
+    public interface IUserProfile: IUser
     {
         string ProfilePictureUrl { get; }
     }

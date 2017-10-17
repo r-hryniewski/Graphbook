@@ -64,8 +64,9 @@ namespace Graphbook.Web.Controllers
 
             }
 
-            return View();
-            //return RedirectToAction("Me", "Users");
+            return Request.IsAuthenticated ? 
+                RedirectToAction("Me", "Users") as ActionResult : 
+                View() as ActionResult;
         }
     }
 }

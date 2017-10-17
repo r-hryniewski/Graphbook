@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Graphbook.Models
 {
-    public class UserCard : IUserCard
+    public class UserCard : IUserProfile
     {
         public string Id { get; private set; }
         public string Name { get; private set; }
