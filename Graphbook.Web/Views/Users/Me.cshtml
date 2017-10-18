@@ -1,17 +1,17 @@
-﻿@model Graphbook.Contracts.IUserProfile
+﻿@model Graphbook.Web.ViewModels.MeViewModel
 
 @{
     ViewBag.Title = "Me";
 }
 
 <div class="row">
-    <div class="col-md-4">
-        <img class="img-responsive" src="@Model.ProfilePictureUrl" />
+    <div class="col-xs-4">
+        <img class="img-responsive" src="@Model.MyCard.ProfilePictureUrl" />
     </div>
-    <div class="col-md-8">
+    <div class="col-xs-8">
         <div class="row">
             <div class="col-md-12">
-                <h2>@string.Format("{0} {1}", Model.Name, Model.LastName)</h2>
+                <h2>@string.Format("{0} {1}", Model.MyCard.Name, Model.MyCard.LastName)</h2>
                 <p>I'm to lazy to fill that up with anything (maybe employment and finished school?)</p>
             </div>
         </div>
@@ -21,16 +21,89 @@
     <div class="col-md-12">
         <h1>Friend invites</h1>
     </div>
+    @if (Model.PeopleWhoInvitedMe != null && Model.PeopleWhoInvitedMe.Any())
+    {
+        foreach (var userCard in Model.PeopleWhoInvitedMe)
+        {
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <img class="img-responsive" src="@userCard.ProfilePictureUrl" />
+                    </div>
+                    <div class="col-xs-8">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2>@string.Format("{0} {1}", userCard.Name, userCard.LastName)</h2>
+                                <p>I'm to lazy to fill that up with anything (maybe employment and finished school?)</p>
+                                <a href="@Url.Action("AcceptInvitation", "Users", new { id = userCard.Id})" class="btn btn-primary">Accept</a>
+                                <a href="@Url.Action("DeclineInvitation", "Users", new { id = userCard.Id})" class="btn btn-warning">Decline</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
 </div>
 <div class="row">
     <div class="col-md-12">
         <h1>Friend sugestions</h1>
     </div>
+    @if (Model.FriendSuggestions != null && Model.FriendSuggestions.Any())
+    {
+        foreach (var userCard in Model.FriendSuggestions)
+        {
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <img class="img-responsive" src="@userCard.ProfilePictureUrl" />
+                    </div>
+                    <div class="col-xs-8">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2>@string.Format("{0} {1}", userCard.Name, userCard.LastName)</h2>
+                                <p>I'm to lazy to fill that up with anything (maybe employment and finished school?)</p>
+                                <a href="@Url.Action("Invite", "Users", new { id = userCard.Id})" class="btn btn-primary">Invite</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
 </div>
 <div class="row">
     <div class="col-md-12">
         <h1>Friends</h1>
+
     </div>
+    @if (Model.Friends != null && Model.Friends.Any())
+    {
+        foreach (var userCard in Model.Friends)
+        {
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <img class="img-responsive" src="@userCard.ProfilePictureUrl" />
+                    </div>
+                    <div class="col-xs-8">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2>@string.Format("{0} {1}", userCard.Name, userCard.LastName)</h2>
+                                <p>I'm to lazy to fill that up with anything (maybe employment and finished school?)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="col-md-4">
+            <img class="image-responsive" src="~/Content/Img/ForeverAlone.jpg" />
+        </div>
+    }
 </div>
 
 

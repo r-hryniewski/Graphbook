@@ -179,6 +179,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\MeViewModel.cs" />
+    <Content Include="Content\Img\ForeverAlone.jpg" />
     <Content Include="Resources\SampleUsers.json" />
   </ItemGroup>
   <ItemGroup>

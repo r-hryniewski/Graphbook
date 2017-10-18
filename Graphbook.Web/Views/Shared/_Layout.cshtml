@@ -10,6 +10,14 @@
 <body>
     @{Html.RenderAction("Index", "Navbar");}
     <div class="container body-content">
+        @if (TempData.Peek("Message") != null)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="text-center text-warning">@TempData["Message"]</h4>
+                </div>
+            </div>
+        }
         @RenderBody()
         <hr />
         <footer>
