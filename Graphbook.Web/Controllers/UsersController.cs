@@ -27,8 +27,8 @@ namespace Graphbook.Web.Controllers
                 //peopleWhoInvitedMe: Enumerable.Empty<IUserProfile>(),
                 friends: await repo.GetMyFriendsAsync(currentuser.Id),
                 //friends: Enumerable.Empty<IUserProfile>(),
-                //friendSuggestions: await repo.GetMyFriendsSuggestions(currentuser.Id));
-                friendSuggestions: Enumerable.Empty<IUserProfile>());
+                friendSuggestions: await repo.GetMyFriendsSuggestions(currentuser.Id));
+                //friendSuggestions: Enumerable.Empty<IUserProfile>());
 
             return View(vm);
         }

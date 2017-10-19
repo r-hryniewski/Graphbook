@@ -31,16 +31,28 @@ namespace Graphbook.DAL
             return result != null && result.Any();
         }
 
-        public async Task<IEnumerable<IUserProfile>> GetMyFriendsSuggestions(string id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IEnumerable<IUserProfile>> GetMyFriendsAsync(string id)
         {
             return await gremlinClient.Execute(
                 //Since 'friend' edge is one way edge - we need to use 'both()' traversal step to traverse both incoming and outcoming edges
                 gremlinQuery: $"g.V('{id}').both('{Edge_Friend}').dedup()",
+                vertexSelector: v => new Models.UserCard(v));
+        }
+
+        public async Task<IEnumerable<IUserProfile>> GetMyFriendsSuggestions(string id)
+        {
+            return await gremlinClient.Execute(
+                gremlinQuery: $"g.V('{id}').both('{Edge_Friend}').both('{Edge_Friend}').dedup()",
+
+                //UH! Above query suggest me as my own friend! Something is seriously wrong here, lets use 'as()' and 'where()' steps
+                //gremlinQuery: $"g.V('{id}').as('me').both('{Edge_Friend}').both('{Edge_Friend}').where(neq('me')).dedup()",
+
+                //Let's order results by mutual friends count
+                //gremlinQuery: $"g.V('{id}').as('me').both('{Edge_Friend}').both('{Edge_Friend}')." + //Old query fragment
+                //$"order().by(both('{Edge_Friend}').both('{Edge_Friend}').where(is('me')).count(), decr)" + //Ordering by mutual friends count
+                //$".where(values('id').is(neq('{id}')))" + //Another way to filter people that are not me
+                //$".dedup()",
+
                 vertexSelector: v => new Models.UserCard(v));
         }
 
