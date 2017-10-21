@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ISchool.cs" />
+    <Compile Include="ICompany.cs" />
     <Compile Include="IUser.cs" />
     <Compile Include="IUserProfile.cs" />
     <Compile Include="IUserIdentity.cs" />

@@ -6,14 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using static Graphbook.DAL.Constants;
 
 namespace Graphbook.DAL
 {
     public class UserRepository
     {
-        private const string Label_User = "user";
-        private const string Edge_Invite = "invite";
-        private const string Edge_Friend = "friend";
 
         private readonly GremlinClient gremlinClient;
 
