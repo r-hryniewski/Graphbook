@@ -103,6 +103,18 @@ namespace Graphbook.DAL
                 gremlinQuery: $"g.V('{myId}').inE('{Edge_Invite}').where(outV().has('id', '{invitingUserId}')).drop()");
         }
 
+        public async Task AddSchoolThatUserAttendedToAsync(string userId, string schoolId)
+        {
+            await gremlinClient.Execute(
+                gremlinQuery: $"g.V('{userId}').addE('{Edge_Attended}').to(g.V('{schoolId}'))");
+        }
+
+        public async Task AddCompanyThatUserWorksAtAsync(string userId, string companyId)
+        {
+            await gremlinClient.Execute(
+                gremlinQuery: $"g.V('{userId}').addE('{Edge_WorksAt}').to(g.V('{companyId}'))");
+        }
+
         public async Task<IUserProfile> GetCardAsync(string userId)
         {
             var results = await gremlinClient.Execute(gremlinQuery: $"g.V('{userId}')",

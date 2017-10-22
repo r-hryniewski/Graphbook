@@ -197,6 +197,8 @@
     </Content>
     <None Include="Properties\PublishProfiles\gremlinbook - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\rh-demo - Web Deploy.pubxml" />
+    <Content Include="Resources\SampleCompanies.json" />
+    <Content Include="Resources\SampleSchools.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -226,7 +228,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
     <Folder Include="Views\DemoInit\" />
   </ItemGroup>
   <ItemGroup>

@@ -9,7 +9,7 @@ namespace Graphbook.DAL
     internal static class Constants
     {
         internal const string Label_Company = "company";
-        internal const string Label_School = "user";
+        internal const string Label_School = "school";
         internal const string Label_User = "user";
 
         internal const string Edge_Friend = "friend";

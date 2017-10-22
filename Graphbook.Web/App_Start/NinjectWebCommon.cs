@@ -47,11 +47,6 @@ namespace Graphbook.Web.App_Start
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
 
-                kernel.Bind<IUser>().ToMethod(ctx => new Identity.User(System.Security.Claims.ClaimsPrincipal.Current)).InRequestScope();
-
-                kernel.Bind<DAL.Graphs.GremlinClient>().ToSelf().InSingletonScope();
-                kernel.Bind<DAL.UserRepository>().ToSelf().InSingletonScope();
-
                 RegisterServices(kernel);
                 return kernel;
             }
@@ -68,6 +63,13 @@ namespace Graphbook.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+
+            kernel.Bind<IUser>().ToMethod(ctx => new Identity.User(System.Security.Claims.ClaimsPrincipal.Current)).InRequestScope();
+
+            kernel.Bind<DAL.Graphs.GremlinClient>().ToSelf().InSingletonScope();
+            kernel.Bind<DAL.UserRepository>().ToSelf().InSingletonScope();
+            kernel.Bind<DAL.CompanyRepository>().ToSelf().InSingletonScope();
+            kernel.Bind<DAL.SchoolRepository>().ToSelf().InSingletonScope();
         }        
     }
 }
