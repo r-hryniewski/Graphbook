@@ -10,3 +10,6 @@ In Application Settings you should include those settings from Cosmos DB (key //
 * CosmosDBCollectionId - Id for your Collection in Cosmos DB (it will be created automatically if not exists)
 
 
+Main point of interest is DAL project. There are few examples for executing queries against Cosmos DB i GremlinClient class and some queries examples in Repositories.
+
+
