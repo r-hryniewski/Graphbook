@@ -1,0 +1,16 @@
+### Sample Queries
+
+# Who are the users that are friends of my friends?
+g.V('myId').bothE('friend').otherV().bothE('friend').otherV().hasLabel('user').dedup()
+
+# Who are the users that are friends of my friends myself excluded?
+g.V('myId').as('me').bothE('friend').otherV().bothE('friend').otherV().hasLabel('user').where(neq('me'))
+#or
+g.V('myId').bothE('friend').otherV().bothE('friend').otherV().hasLabel('user').where(values('id').is(neq('myId')))
+
+# Who are the users that are friends of my friends myself excluded and ordered by mutual friends count?
+g.V('myId').as('me').both('friend').both('friend').order().by(both('friend').both('friend').where(is('me')).count(), decr).where(values('id').is(neq('myId'))).dedup()
+
+###
+# Where does people that attended to Harvard University work? (query starting with edge)
+g.E().hasLabel('attended').where(inV().hasLabel('school').has('name', 'Harvard University')).outV().out('worksAt').dedup().values('name')
